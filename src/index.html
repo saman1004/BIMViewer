@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="Robots" content="Noindex,Nofollow">
+<meta name="description" content="Bim 3d viewer">
+<meta http-equiv="imagestoolbar" content="no">
+<meta http-equiv="imagetoolbar" content="no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bim 3d viewer</title>
+<!-- bootstrap-->
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<!-- 스타일 css -->
+<link rel="stylesheet" href="css/style.css" />
+<!-- js-->
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.minicolors.js"></script>
+<script type="text/javascript" src="js/common.js?v=1"></script>
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+<script type="importmap">
+  {
+    "imports": {
+        "three": "./three/build/three.module.js",
+        "three-mesh-bvh": "./three-mesh-bvh/build/index.module.js"
+    }
+  }
+</script>
+<script type="module" src="./main.js"></script>
+</head>
+<body>
+<!-- 💡 임시파일목록 시작-->
+<div style="position: absolute; display: flex; flex-direction: column; top: 100px; z-index: 10000;">
+  <label for="csv">csv파일</label>
+  <input id="csv" type="file" onchange="openCsvBlob()"><br>
+  <label for="glb">glb파일</label>
+  <input id="glb" type="file" onchange="openGlbBlob()"><br>
+  <br>
+  <button class="btnClass" onclick="removeSceneAll()">모두 삭제</button>
+  <!-- <br>
+  <button class="btnClass" onclick="openGlbUrl('./models/jisanRotary_kd.glb')" style="text-align: left;">샘플 - 지산교차로</button>
+  <button class="btnClass" onclick="openGlbUrl('../모델경로테스트1.glb')" style="text-align: left;">../모델경로테스트1.glb</button>
+  <br>
+  <button class="btnClass" onclick="openGlbUrl('./models/01.도로-03.glb', './models/01.도로-03.csv')" style="text-align: left;">[Open]도로</button>
+  <button class="btnClass" onclick="openGlbUrl('./models/02.교량-04.glb', './models/02.교량-04.csv')" style="text-align: left;">[Open]교량</button>
+  <button class="btnClass" onclick="openGlbUrl('./models/ifcbridge-model01.glb', './models/ifcbridge-model01.csv')" style="text-align: left;">[Open]ifcbridge-model01</button>
+  <br>
+  <button class="btnClass" onclick="importGlbUrl(event, './models/01.도로-03.glb', './models/01.도로-03.csv')" style="text-align: left;">[Import]도로</button>
+  <button class="btnClass" onclick="importGlbUrl(event, './models/02.교량-04.glb', './models/02.교량-04.csv')" style="text-align: left;">[Import]교량</button> -->
+</div>
+<!-- 💡 임시파일목록 끝-->
+<!-- canvas 영역 시작 -->
+<div class="canvas_container" id="view3d">
+  <!-- canvas  영역 비워놓기-->
+</div>
+<!--// canvas 영역 끝-->
+<!-- 💡 백그라운드 이미지 삭제 했음 -->
+<!-- <div class="content_container" style="background: url(images/bg.png) center center no-repeat;background-size: cover;"> -->
+<div class="content_container">
+  <div class="content">
+    <!-- 하단 플로트 메뉴 시작-->
+    <div class="float_menu_wrap">
+      <div class="hamburger hover_menu">
+        <div class="dots">
+          <span class="first"></span>
+          <span class="second"></span>
+          <span class="third"></span>
+          <span class="forth"></span>
+        </div>
+        <div class="action_items_bar">
+          <div class="action_items">
+            <div class="menu_home active" onclick="bimViewer.home()">
+              <img src="images/btn_wrap/material-icon01.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                홈
+              </p>
+            </div>
+            <div class="menu_measure">
+              <img src="images/btn_wrap/material-icon02.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                측정
+              </p>
+            </div>
+            <div class="menu_measureArea">
+              <img src="images/btn_wrap/material-icon12.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                면적측정
+              </p>
+            </div>
+            <div class="menu_scale">
+              <img src="images/btn_wrap/material-icon03.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                스케일
+              </p>
+            </div>
+            <div class="menu_side" onclick="bimViewer.clipping.setClipping()">
+              <img src="images/btn_wrap/material-icon04.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                단면
+              </p>
+            </div>
+            <div class="menu_parts">
+              <img src="images/btn_wrap/material-icon05.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                분해
+              </p>
+            </div>
+            <div class="menu_flyView" onclick="bimViewer.flyView.setFlyView()">
+              <img src="images/btn_wrap/material-icon13.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                플라이뷰
+              </p>
+            </div>
+            <div class="menu_firstPerson">
+              <img src="images/btn_wrap/material-icon10.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                1인칭시점
+              </p>
+            </div>
+            <div class="menu_markup" onclick="loadMarkup()">
+              <img src="images/btn_wrap/material-icon06.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                마크업
+              </p>
+            </div>
+            <div class="menu_intersect">
+              <img src="images/btn_wrap/material-icon11.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                간섭검토
+              </p>
+            </div>
+            <!-- <div class="menu_fullscreen"> -->
+              <div class="menu_viewPort" onclick="bimViewer.viewPort.ViewPort(bimViewer.zoomFit)">
+                <img src="images/btn_wrap/material-icon14.svg" alt="" class="material-icons">
+                <p class="icon_text">
+                  화면분할
+                </p>
+              </div>
+              <div class="menu_fullscreen" onclick="bimViewer.screen.expandFullScreen()">
+                <img src="images/btn_wrap/material-icon08.svg" alt="" class="material-icons">
+                <p class="icon_text">
+                  전체화면
+                </p>
+              </div>
+              <div class="menu_screenshot" onclick="bimViewer.screen.saveLocalScreenshot()">
+                <img src="images/btn_wrap/material-icon07.svg" alt="" class="material-icons">
+                <p class="icon_text">
+                  스크린샷
+                </p>
+              </div>
+            <div class="menu_view" onclick="getScreen(0.3)">
+              <img src="images/btn_wrap/material-icon09.svg" alt="" class="material-icons">
+              <p class="icon_text">
+                뷰저장
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sub_menu_wrap">
+        <!--  측정 시작-->
+        <div class="sub_items row menu_measure" style="min-width: 90%;">
+          <div class="mg_wrap" style="display: flex; width: 100%; align-items: center; justify-content: space-evenly;">
+            <div style="display: flex; align-items: center;">
+              Point-Snap : <input type="checkbox" id="dim_snap" onchange="bimViewer.changeSnappingMode(this.checked)" style="width: 16px;">
+            </div>
+            <span class="msg"> 치수생성 버튼 클릭 후, 측정할 두 지점을 클릭하세요</span>
+            <button type="button" class="btn btn-primary" onclick="bimViewer.dim.setState()">치수생성</button>
+          </div>
+        </div>
+        <div class="sub_items row menu_measureArea" style="min-width: 90%;">
+          <div class="mg_wrap" style="display: flex; width: 100%; align-items: center; justify-content: space-evenly;">
+            <div style="display: flex; align-items: center;">
+              Point-Snap : <input type="checkbox" id="area_snap" onchange="bimViewer.changeSnappingMode(this.checked)" style="width: 16px;">
+            </div>
+            <span class="msg"> 면적측정 버튼 클릭 후, 클릭으로 다각형을 생성하고 마우스 오른쪽 클릭으로 마무리합니다.</span>
+            <button type="button" class="btn btn-primary" onclick="bimViewer.area.setState()">면적측정</button>
+          </div>
+        </div>
+        <!--// 측정 끝-->
+        <!-- 스케일 시작-->
+        <div class="sub_items row menu_scale">
+          <div class="col slider_wrap">
+            <img src="images/menu_icon/menu_scale_x.svg">
+            <div class="slider">
+              <label class="form-label">X (좌우)</label>
+              <input type="range" class="form-range" value="1" min="1" max="6" step="0.5" id="scaleX" oninput="bimViewer.setScale('scaleX', 'x')">
+            </div>
+          </div>
+          <div class="col slider_wrap">
+            <img src="images/menu_icon/menu_scale_y.svg">
+            <div class="slider">
+              <label class="form-label">Y (상하)</label>
+              <input type="range" class="form-range" value="1" min="1" max="6" step="0.5" id="scaleY" oninput="bimViewer.setScale('scaleY', 'y')">
+            </div>
+          </div>
+          <div class="col slider_wrap">
+            <img src="images/menu_icon/menu_scale_z.svg">
+            <div class="slider">
+              <label class="form-label">Z (전후)</label>
+              <input type="range" class="form-range" value="1" min="1" max="6" step="0.5" id="scaleZ" oninput="bimViewer.setScale('scaleZ', 'z')">
+            </div>
+          </div>
+        </div>
+        <!--// 스케일 끝-->
+        <!-- 단면 시작-->
+        <div class="sub_items row menu_side">
+          <div class="title_form" id="radioTransformMode" onclick="bimViewer.clipping.changeTransformMode(event)">
+            <div class="form_title">
+              클리핑 모드
+            </div>
+            <div class="form-check">
+              <input class="" type="radio" name="TransformMode" id="radioTranslate" value="option1" checked="checked">
+              <label class="" for="radioTranslate">이동모드</label>
+            </div>
+            <div class="form-check">
+              <input class="" type="radio" name="TransformMode" id="radioRotate" value="option2">
+              <label class="" for="radioRotate">회전모드</label>
+            </div>
+            <div style="width: 30px; height: 60%; border-right: 2px solid #d1d1d1;"></div>
+            <div class="form-check transform-input" id="input-translate">
+              X: <input class="trans-input" id="translateX" oninput="bimViewer.clipping.setTransformEle(parseFloat(this.value), this.id, 'input')"> 
+              Y: <input class="trans-input" id="translateY" oninput="bimViewer.clipping.setTransformEle(parseFloat(this.value), this.id, 'input')"> 
+              Z: <input class="trans-input" id="translateZ" oninput="bimViewer.clipping.setTransformEle(parseFloat(this.value), this.id, 'input')"> 
+            </div>
+            <div class="form-check transform-input" id="input-rotate" style="display: none;">
+              X: <input class="trans-input" id="rotateX" oninput="bimViewer.clipping.setTransformEle(parseFloat(this.value), this.id, 'input')">
+              Y: <input class="trans-input" id="rotateY" oninput="bimViewer.clipping.setTransformEle(parseFloat(this.value), this.id, 'input')">
+              Z: <input class="trans-input" id="rotateZ" oninput="bimViewer.clipping.setTransformEle(parseFloat(this.value), this.id, 'input')">
+            </div>
+          </div>
+        </div>
+        <!--// 단면 끝-->
+        <!-- 분해 시작-->
+        <div class="sub_items row menu_parts">
+          <div class="col slider_wrap">
+            <img src="images/menu_icon/menu_parts_x.svg">
+            <div class="slider">
+              <label class="form-label">X (좌우)</label>
+              <input type="range" class="form-range" id="explodeX" min="0" max="1" step="0.05" value="0" oninput="bimViewer.setExplode('explodeX', 'x')">
+            </div>
+          </div>
+          <div class="col slider_wrap">
+            <img src="images/menu_icon/menu_parts_y.svg">
+            <div class="slider">
+              <label class="form-label">Y (상하)</label>
+              <input type="range" class="form-range" id="explodeY" min="0" max="1" step="0.05" value="0" oninput="bimViewer.setExplode('explodeY', 'y')">
+            </div>
+          </div>
+          <div class="col slider_wrap">
+            <img src="images/menu_icon/menu_parts_z.svg">
+            <div class="slider">
+              <label class="form-label">Z (전후)</label>
+              <input type="range" class="form-range" id="explodeZ" min="0" max="1" step="0.05" value="0" oninput="bimViewer.setExplode('explodeZ', 'z')">
+            </div>
+          </div>
+        </div>
+        <!--// 분해 끝-->
+        <!-- 플라이뷰 시작 -->
+        <div class="sub_items row menu_flyView">
+          <div class="mg_wrap">
+            <span class="msg">[키보드 컨트롤] WASD : 앞좌뒤우 이동, QE : 위 아래 이동, ZC : 좌우방향 회전</span>
+          </div>
+        </div>
+        <!--// 1인칭 끝 -->
+        <!-- 1인칭 시작 -->
+        <div class="sub_items row menu_firstPerson">
+          <div class="mg_wrap">
+            <span class="msg">1인칭 시점 생성 버튼을 클릭 후, 시작할 장소를 클릭하세요 </span>
+            <button type="button" class="btn btn-primary" onclick="bimViewer.firstPerson.setState()">1인칭 시점 생성</button>
+          </div>
+        </div>
+        <!--// 1인칭 끝 -->
+        <!--  마크업 시작-->
+        <div class="sub_items row menu_markup">
+          <div class="mg_wrap">
+            <span class="msg">마크업 생성 버튼을 클릭 후, 마크업을 생성할 지점을 선택하세요.</span>
+            <button type="button" class="btn btn-primary" onclick="addMarkUp()">마크업 생성</button>
+          </div>
+        </div>
+        <!--// 마크업 끝-->
+        <!--  스크린샷 시작-->
+        <div class="sub_items row menu_screenshot">
+          스크린샷영역
+        </div>
+        <!--// 스크린샷 끝-->
+        <!--  풀스크린 시작-->
+        <div class="sub_items row menu_fullscreen">
+          <div class="mg_wrap">
+            <span class="msg">이설정을 유지하겠습니까?</span>
+            <button type="button" class="btn btn-primary">유지</button>
+            <button type="button" class="btn btn-secondary">축소</button>
+          </div>
+        </div>
+        <!--// 풀스크린 끝-->
+        <!--  뷰저장 시작-->
+        <div class="sub_items row menu_view">
+          <div class="mg_wrap">
+            <span class="msg">해당뷰를 저장하시겠습니까?</span>
+            <button type="button" class="btn btn-primary">저장</button>
+          </div>
+        </div>
+        <!--// 뷰저장 끝-->
+        <!-- 간섭검토 시작 -->
+        <div class="sub_items row menu_intersect">
+          <div class="mg_wrap">
+            <span class="msg"> 확인할 두 Mesh를 선택하세요</span>
+            <button type="button" class="btn btn-primary" onclick="bimViewer.intersectionTest.setState('a', this)">첫번째 Mesh 선택</button>
+            <button type="button" class="btn btn-primary" onclick="bimViewer.intersectionTest.setState('b', this)">두번째 Mesh 선택</button>
+          </div>
+        </div>
+        <!-- 간섭검토 끝 -->
+      </div>
+    </div>
+    <!-- //하단 플로트 메뉴 끝-->
+    <!-- 우측 사이드바 시작-->
+    <div class="side_menu_wrap">
+      <!-- 사이드메뉴 토글버튼 시작-->
+      <div class="bt_open">
+      </div>
+      <!-- //사이드메뉴 토글버튼 끝-->
+      <!-- 사이드메뉴 시작-->
+      <div class="side_wrapper">
+        <div class="print-tab">
+          <ul class="print-tab-menu" role="tablist">
+            <li class="tab-item active" id="tab_objectList" data-bs-toggle="tab" data-bs-target="#tab_objectList_pane" role="tab" aria-controls="tab_objectList_pane" aria-selected="true">
+              객체목록
+            </li>
+            <li class="tab-item" id="tab_objectSearch" data-bs-toggle="tab" data-bs-target="#tab_objectSearch_pane" role="tab" aria-controls="tab_objectSearch_pane" aria-selected="false">
+              객체조회
+            </li>
+            <li class="tab-item" id="tab_setting" data-bs-toggle="tab" data-bs-target="#tab_setting_pane" role="tab" aria-controls="tab_setting_pane" aria-selected="false">
+              설정
+            </li>
+          </ul>
+          <div class="print-tab-content">
+            <!-- 객체목록탭 시작-->
+            <div class="tab-pane fade show active" id="tab_objectList_pane" role="tabpanel" aria-labelledby="tab_objectList" tabindex="0">
+              <div class="tab_title tab_objectList">
+                <p>
+                  객체목록
+                </p>
+                <p class="tab_close">
+                </p>
+              </div>
+              <div class="tab_cont" style="margin-right:5px;">
+                <div class="tab_subcont tree_wrap">
+                  <!-- 트리영역 예시👇 -->
+                  <ol class="tree">
+                    <li>
+                      <label for="menu-1">Gaid001.glb</label>
+                      <input type="checkbox" id="menu-1" />
+                      <ol>
+                        <li class="file">
+                          balpa_mesh
+                        </li>
+                        <li class="file">
+                          balpa_mesh_1
+                        </li>
+                        <li class="file">
+                          balpa_mesh_2
+                        </li>
+                        <li class="file">
+                          balpa_mesh_3
+                        </li>
+                        <li class="file">
+                          balpa_mesh_4
+                        </li>
+                      </ol>
+                    </li>
+                    <li class="disabled">
+                      <label for="menu-3">Gaid002.glb</label>
+                      <input type="checkbox" id="menu-3" />
+                      <ol>
+                        <li class="file">
+                          balpa_mesh
+                        </li>
+                        <li class="file">
+                          balpa_mesh_1
+                        </li>
+                        <li class="file">
+                          balpa_mesh_2
+                        </li>
+                        <li class="file">
+                          balpa_mesh_3
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
+                </div>
+                <div class="detail_attr">
+                  <div class="tab_subcont top_border">
+                  </div>
+                  <div class="tab_subcont detail_table">
+                    <div class="object_title">
+                      balpa_mesh_1
+                      <button type="button" class="btn-close"></button>
+                    </div>
+                    <table class="side_table">
+                      <thead>
+                        <tr>
+                          <th>속성 키</th>
+                          <th>속성 값</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>IFCBuild</th>
+                          <td>3E70AqC9L489</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="tab_subcont color_picker_wrap">
+                    <div class="item_wrap">
+                      <!-- 💡 칼라픽커 변경 -->
+                      <!-- <input type="text" id="color_picker" class="color_picker" value=""> -->
+                      <div style="display: flex;align-items: center; color:white;">
+                        <input type="color" id="color_picker" class="color_picker">
+                        <label for="color_picker"></label>
+                      </div>
+                      <!-- 💡 Opacity 추가 -->
+                      <div style="display: flex;align-items: center; color:white;">
+                        Opacity : <input type="text" id="opacity"></input>
+                      </div>
+                      <div class="item_visible">
+                        <input type="checkbox" id="item_visible" checked>
+                        <label for="item_visible"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- //객제목록탭 끝-->
+            <!-- 객체조회탭 시작-->
+            <div class="tab-pane fade" id="tab_objectSearch_pane" role="tabpanel" aria-labelledby="tab_objectSearch" tabindex="0">
+              <div class="tab_title tab_objectSearch">
+                <p>
+                  객체조회
+                </p>
+                <p class="tab_close">
+                </p>
+              </div>
+              <div class="tab_cont">
+                <div class="tab_subcont" id="searchTab">
+                  <!--객체조회탭의 검색 시작-->
+                  <div class="input-group search mb-3">
+                    <input type="text" class="form-control" id="search" onkeypress="bimViewer.treeView.onKeyPress(event)" placeholder="검색어를 입력하세요" aria-label="객체조회">
+                    <button onclick="bimViewer.treeView.search()" class="btn bt_inIcon bt_search" type="button"></button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <!-- //객체조회탭 끝-->
+            <!-- 설정탭 시작-->
+            <div class="tab-pane fade" id="tab_setting_pane" role="tabpanel" aria-labelledby="tab_setting" tabindex="0">
+              <div class="tab_title tab_setting">
+                <p>
+                  설정
+                </p>
+                <p class="tab_close">
+                </p>
+              </div>
+              <div class="tab_cont">
+                <!-- 뷰설정 시작-->
+                <div class="tab_cont_subtitle">
+                  <span>뷰 설정</span>
+                </div>
+                <div class="tab_subcont" id="viewSetting">
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkWireframe" name="viewSetting" onclick="bimViewer.changeWireframe()">
+                    <label class="" for="chkWireframe"> 와이드프레임모드 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkSolid" name="viewSetting" onclick="bimViewer.changeSolid()">
+                    <label class="" for="chkSolid"> 솔리드모드 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkGridHelper" name="viewSetting" onclick="bimViewer.changeGrid()">
+                    <label class="" for="chkGridHelper"> 그리드 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkAxeSwitch" name="viewSetting" onclick="bimViewer.changeAxes()">
+                    <label class="" for="chkAxeSwitch"> 좌표축 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkAutoRotate" name="viewSetting" onclick="bimViewer.changeAutoRotate()">
+                    <label class="" for="chkAutoRotate"> 자동회전 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkCamera" name="viewSetting" onclick="bimViewer.changeCameraMode()">
+                    <label class="" for="chkCamera"> 카메라 직교투영모드 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox"id="chkShadow" name="viewSetting" onclick="bimViewer.changeShadowPlane()">
+                    <label class="" for="chkShadow"> 바닥면 그림자 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkMeshShadow" name="viewSetting" onclick="bimViewer.changeMeshShadow()">
+                    <label class="" for="chkMeshShadow"> 객체별 그림자 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkMeshSide" name="viewSetting" onclick="bimViewer.changeMeshSide()">
+                    <label class="" for="chkMeshSide"> 객체 양쪽면 표현 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" id="chkClippingLine" name="viewSetting" onclick="bimViewer.changeShowClippingLine(this.checked)">
+                    <label class="" for="chkClippingLine"> 단면 라인 표현 </label>
+                  </div>
+                  <div class="title_form" id="radioBackground" onchange="bimViewer.changeBackground(event)">
+                    <div class="form_title">
+                      배경
+                    </div>
+                    <div class="form-check">
+                      <input class="" type="radio" name="background" id="radioBgNone" value="option1" checked>
+                      <label class="" for="radioBgNone">없음</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="" type="radio" name="background" id="radioBgDay" value="option2">
+                      <label class="" for="radioBgDay">낮</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="" type="radio" name="background" id="radioBgNight" value="option3">
+                      <label class="" for="radioBgNight">밤</label>
+                    </div>
+                  </div>
+                  <div class="title_form">
+                    <div class="form_title">
+                      노출
+                    </div>
+                    <div class="slider" style="display: flex;margin-top: 10px;">
+                      <input type="range" class="form-range" value="2.0" id="rangeExposure" min="0.5" max="3.5" step="0.1" oninput="bimViewer.changeExposure(event)">
+                    </div>
+                  </div>
+                </div>
+                <!-- //뷰설정 끝-->
+                <!-- 객체선택시 시작-->
+                <!-- <div class="tab_cont_subtitle">
+                  <span>객체선택시</span>
+                </div>
+                <div class="tab_subcont">
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" name="selectObject" id="chkPickColor" onclick="bimViewer.togglePickColor()">
+                    <label class="" for="chkPickColor"> 색상 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" name="selectObject" id="chkBoxHelper" onclick="bimViewer.toggleBoxHelper()">
+                    <label class="" for="chkBoxHelper"> 보조박스 </label>
+                  </div>
+                  <div class="form-check mb-4">
+                    <input class="" type="checkbox" name="selectObject" id="chkLabel" onclick="bimViewer.toggleLabel()">
+                    <label class="" for="chkLabel"> 라벨 </label>
+                  </div>
+                </div> -->
+                <!-- //객체선택시 끝-->
+              </div>
+            </div>
+            <!--// 설정탭 끝-->
+          </div>
+        </div>
+      </div>
+      <!-- //사이드메뉴 끝-->
+    </div>
+    <!--// 우측 사이드바 끝-->
+    
+  </div>
+
+</div>
+<div class="split_container" style="position: absolute; top: 0; left: 0; display: none;">      
+  <div class="split_wrap">
+    <div id="view1" style="z-index: 9;"></div>
+    <!-- 드롭다운 커스텀 시작-->
+    <details class="custom-select" style="z-index: 99;">
+      <summary class="radios">            
+        <input type="radio" name="view1" id="view1Perspective" title="Perspective" checked>
+        <input type="radio" name="view1" id="view1Top" title="Top">
+        <input type="radio" name="view1" id="view1Front" title="Front">
+        <input type="radio" name="view1" id="view1Right" title="Right">
+        <input type="radio" name="view1" id="view1Left" title="Left">
+        <input type="radio" name="view1" id="view1Bottom" title="Bottom">
+        <input type="radio" name="view1" id="view1Back" title="Back">                        
+      </summary>
+      <ul class="list">
+        <li>
+          <label for="view1Perspective">
+            Perspective 
+          </label>
+        </li>
+        <li>
+          <label for="view1Top">Top</label>
+        </li>
+        <li>
+          <label for="view1Front">Front</label>
+        </li>
+        <li>
+          <label for="view1Right">Right</label>
+        </li>
+        <li>
+          <label for="view1Left">Left</label>
+        </li>
+        <li>
+          <label for="view1Bottom">Bottom</label>
+        </li>
+        <li>
+          <label for="view1Back">Back</label>
+        </li>                        
+      </ul>
+    </details>
+    <!--// 드롭다운 커스텀 시작-->
+  </div>
+  <div class="split_wrap">
+    <div id="view2" style="z-index: 9;"></div>
+    <!-- 드롭다운 커스텀 시작-->
+    <details class="custom-select" style="z-index: 99;">
+      <summary class="radios">            
+        <input type="radio" name="view2" id="view2Perspective" title="Perspective">
+        <input type="radio" name="view2" id="view2Top" title="Top"  checked>
+        <input type="radio" name="view2" id="view2Front" title="Front">
+        <input type="radio" name="view2" id="view2Right" title="Right">
+        <input type="radio" name="view2" id="view2Left" title="Left">
+        <input type="radio" name="view2" id="view2Bottom" title="Bottom">
+        <input type="radio" name="view2" id="view2Back" title="Back">                        
+      </summary>
+      <ul class="list">
+        <li>
+          <label for="viewPerspective">
+            Perspective 
+          </label>
+        </li>
+        <li>
+          <label for="view2Top">Top</label>
+        </li>
+        <li>
+          <label for="view2Front">Front</label>
+        </li>
+        <li>
+          <label for="view2Right">Right</label>
+        </li>
+        <li>
+          <label for="view2Left">Left</label>
+        </li>
+        <li>
+          <label for="view2Bottom">Bottom</label>
+        </li>
+        <li>
+          <label for="view2Back">Back</label>
+        </li>                        
+      </ul>
+    </details>
+    <!--// 드롭다운 커스텀 시작-->
+  </div>
+  <div class="split_wrap">
+    <div id="view3" style="z-index: 9;"></div>
+    <!-- 드롭다운 커스텀 시작-->
+    <details class="custom-select" style="z-index: 99;">
+      <summary class="radios">            
+        <input type="radio" name="view3" id="view3Perspective" title="Perspective" >
+        <input type="radio" name="view3" id="view3Top" title="Top">
+        <input type="radio" name="view3" id="view3Front" title="Front" checked>
+        <input type="radio" name="view3" id="view3Right" title="Right">
+        <input type="radio" name="view3" id="view3Left" title="Left">
+        <input type="radio" name="view3" id="view3Bottom" title="Bottom">
+        <input type="radio" name="view3" id="view3Back" title="Back">                        
+      </summary>
+      <ul class="list">
+        <li>
+          <label for="view3Perspective">
+            Perspective 
+          </label>
+        </li>
+        <li>
+          <label for="view3Top">Top</label>
+        </li>
+        <li>
+          <label for="view3Front">Front</label>
+        </li>
+        <li>
+          <label for="view3Right">Right</label>
+        </li>
+        <li>
+          <label for="view3Left">Left</label>
+        </li>
+        <li>
+          <label for="view3Bottom">Bottom</label>
+        </li>
+        <li>
+          <label for="view3Back">Back</label>
+        </li>                        
+      </ul>
+    </details>
+    <!--// 드롭다운 커스텀 시작-->
+  </div>
+  <div class="split_wrap">
+    <div id="view4" style="z-index: 9;"></div>
+    <!-- 드롭다운 커스텀 시작-->
+    <details class="custom-select" style="z-index: 99;">
+      <summary class="radios">            
+        <input type="radio" name="view4" id="view4Perspective" title="Perspective">
+        <input type="radio" name="view4" id="view4Top" title="Top">
+        <input type="radio" name="view4" id="view4Front" title="Front">
+        <input type="radio" name="view4" id="view4Right" title="Right" checked>
+        <input type="radio" name="view4" id="view4Left" title="Left">
+        <input type="radio" name="view4" id="view4Bottom" title="Bottom">
+        <input type="radio" name="view4" id="view4Back" title="Back">                        
+      </summary>
+      <ul class="list">
+        <li>
+          <label for="view4Perspective">
+            Perspective 
+          </label>
+        </li>
+        <li>
+          <label for="view4Top">Top</label>
+        </li>
+        <li>
+          <label for="view4Front">Front</label>
+        </li>
+        <li>
+          <label for="view4Right">Right</label>
+        </li>
+        <li>
+          <label for="view4Left">Left</label>
+        </li>
+        <li>
+          <label for="view4Bottom">Bottom</label>
+        </li>
+        <li>
+          <label for="view4Back">Back</label>
+        </li>                        
+      </ul>
+    </details>
+    <!--// 드롭다운 커스텀 시작-->
+  </div>                  
+  <button class="btn bt_close">분할화면 닫기</button>
+</div>
+
+<script>
+// 퍼블리싱
+$(document).ready(function () {
+  set_flaot();//하단 플로트 메뉴
+  set_sidemenu()//사이드메뉴  
+  set_slidebar() //슬라이드바 디자인
+  set_folding() //폴딩
+  // set_detailAttr()//사이드메뉴  객체목록 하위 속성값 도출
+  // set_color_picker() //컬러피커
+  $('[data-bs-toggle="tooltip"]').tooltip();  //툴팁초기화
+  splitview_select()//분활화면 드롭다운 디자인
+  
+});
+</script>
+
+<script>
+// csv파일 blob으로 열기
+async function openCsvBlob() {
+  const csvFile = document.querySelector("#csv").files[0];
+}
+
+// glb파일 blob으로 열기
+async function openGlbBlob() {
+  const glbFile = document.querySelector("#glb").files[0];
+  const csvFile = document.querySelector("#csv").files[0];
+
+  var reader = new FileReader();
+  reader.onload = async function(e) {
+    const blob = new Blob([e.target.result]);
+    await bimViewer.asyncLoadGlbFromFileBlob(glbFile.name, blob, csvFile);
+    console.log('test');
+  };
+  reader.readAsArrayBuffer(glbFile);
+}
+
+// 모두 삭제
+function removeSceneAll() {
+  // scene의 Mesh와 list초기화
+  bimViewer.removeSceneAll();
+
+  // input태그 값 초기화
+  document.querySelector("#glb").value = '';
+  document.querySelector("#csv").value = '';
+}
+
+
+// // 3d 모델 Open: 화면을 새로고침, 한 개의 모델만 보여줌
+// function openGlbUrl(glbUrl, csvUrl) {
+//   csvUrl ? location.href=`./?glbUrl=${glbUrl}&csvUrl=${csvUrl}` : location.href=`./?glbUrl=${glbUrl}`;
+// }
+
+// // 3d 모델 Import: 여러 개의 모델을 중첩하여 보여줌
+// async function importGlbUrl(event, glbUrl, csvUrl) {
+//   deleteQueryParmeter();
+
+//   const element = event.currentTarget;
+  
+//   // (임시)엘리먼트에 색을 넣었음.
+//   // bimViewer.removeScene(glbUrl);와 await bimViewer.asyncLoadGlb(glbUrl, csvUrl); 만 동작하면 됨
+//   if(element.classList.contains('importGlb')) { 
+//     element.classList.remove('importGlb');
+//     element.style.background = '#F0F0F0';
+
+//     bimViewer.removeScene(glbUrl);
+//   } else {
+//     event.currentTarget.disabled = true;
+//     element.classList.add('importGlb');
+//     element.style.background = 'red';
+
+//     await bimViewer.asyncLoadGlb(glbUrl, csvUrl);
+//     setTimeout(() => { element.disabled = false; }, 0); // 연속동작방지
+//   }
+// }
+
+// function deleteQueryParmeter() {
+//   // Open을 할때, 주소창에 남아있는 쿼리파라미터 삭제
+//   const url = window.location.href;
+//   const newUrl = url.split('?')[0];
+//   window.history.replaceState({}, document.title, newUrl);
+// }
+
+
+// 마크업 불러오기
+function loadMarkup() {
+  // (임시)마크업데이터 랜덤으로 생성
+  const markUpArr = addRandomMarkUpPoint(); 
+
+  // 마크업데이터 배열에서 불러오기
+  markUpArr.forEach( (v) => {
+    bimViewer.markUp.loadMarkUp(v);
+  });
+
+  // 마크업 라벨 클릭시 실행함수
+  bimViewer.markUp.addMarkUpfunction = function(data) {
+    const { name, markX, markY, markZ } = data;
+    console.log(`이름은 ${name}입니다`);
+    console.log(`필요한 함수를 구현합니다`);
+  }
+}
+
+function addRandomMarkUpPoint() {
+  const markUpArrTemp = [];
+  
+  for (let i=0; i<5; i++) {
+    const randomValue = Math.ceil(Math.random()*10_000);
+    const point = {
+      name: '랜덤마커-'+randomValue,
+      markX: bimViewer.zoomFit.centerBox.x + bimViewer.zoomFit.sizeBox*0.5*(Math.random()-0.5),
+      markY: bimViewer.zoomFit.centerBox.y + bimViewer.zoomFit.sizeBox*0.5*(Math.random()-0.5),
+      markZ: bimViewer.zoomFit.centerBox.z + bimViewer.zoomFit.sizeBox*0.5*(Math.random()-0.5)
+    };
+    markUpArrTemp.push(point);
+  }
+
+  return markUpArrTemp;
+}
+
+
+// 마크업 추가하기
+function addMarkUp() {
+  // 마크업 생성
+  bimViewer.markUp.setState();
+
+  // 마크업 지점선택 후 실행함수
+  bimViewer.markUp.addFunction = function(data) {
+    const { markX, markY, markZ, cameraX, cameraY, cameraZ, controlsX, controlsY, controlsZ } = data;
+      console.log(`mark.x : ${markX}입니다`);
+      console.log(`mark.y : ${markY}입니다`);
+      console.log(`mark.z : ${markZ}입니다`);
+      console.log(`마크업생성 시 필요한 함수를 구현합니다`);
+  }
+}
+
+// 뷰저장
+// getScreen(0.5) : 이미지품질만 조절(최대값 1.0, 최소값 0.1)
+// getScreen(0.5, 300, 300) : 이미지품질과 이미지 크기 조절
+function getScreen(quality, resizeWidth, resizeHeight) {
+  const img = bimViewer.screen.getScreen(quality, resizeWidth, resizeHeight);
+  console.log('img :', img);
+}
+
+// 카메라 이동
+function moveCameraPosition(cameraX, cameraY, cameraZ, controlsX, controlsY, controlsZ) {
+  bimViewer.markUp.moveCameraPosition(cameraX, cameraY, cameraZ, controlsX, controlsY, controlsZ);
+}
+
+//툴팁
+$(document).on('mouseover', '.tab_cont .info_wrap [data-bs-toggle="tooltip"]', function() {  
+  $(this).tooltip("show");  
+});
+
+</script>
+
+</body>
+</html>

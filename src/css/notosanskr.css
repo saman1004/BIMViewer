@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "Noto Sans Korean";
+    font-weight: 100;
+    font-style: normal;
+    src: url("../font/notosans/NotoSans-Thin.eot?") format("eot"),
+    url("../font/notosans/NotoSans-Thin.otf") format("opentype"),
+    url("../font/notosans/NotoSans-Thin.woff") format("woff"),    
+    url("../font/notosans/NotoSans-Thin.woff2") format("woff2");
+    
+  }
+  
+  @font-face {
+    font-family: "Noto Sans Korean";
+    font-weight: 200;
+    font-style: normal;
+    src: url("../font/notosans/NotoSans-Light.eot?") format("eot"),
+    url("../font/notosans/NotoSans-Light.otf") format("opentype"),
+    url("../font/notosans/NotoSans-Light.woff") format("woff"),
+    url("../font/notosans/NotoSans-Light.woff2") format("woff2");
+  }
+  
+  @font-face {
+    font-family: "Noto Sans Korean";
+    font-weight: 300;
+    font-style: normal;
+    src: url("../font/notosans/NotoSans-DemiLight.eot?") format("eot"),
+    url("../font/notosans/NotoSans-DemiLight.otf") format("opentype"),
+    url("../font/notosans/NotoSans-DemiLight.woff") format("woff"),
+    url("../font/notosans/NotoSans-DemiLight.woff2") format("woff2");
+  }
+ 
+  @font-face {
+    font-family: "Noto Sans Korean";
+    font-weight: 400;
+    font-style: normal;
+    src: url("../font/notosans/NotoSans-Regular.eot?") format("eot"),
+    url("../font/notosans/NotoSans-Regular.otf") format("opentype"),
+    url("../font/notosans/NotoSans-Regular.woff") format("woff"),
+    url("../font/notosans/NotoSans-Regular.woff2") format("woff2");
+  }
+  
+  @font-face {
+    font-family: "Noto Sans Korean";
+    font-weight: 500;
+    font-style: normal;
+    src: url("../font/notosans/NotoSans-Medium.eot?") format("eot"),
+    url("../font/notosans/NotoSans-Medium.otf") format("opentype"),
+    url("../font/notosans/NotoSans-Medium.woff") format("woff"),
+    url("../font/notosans/NotoSans-Medium.woff2") format("woff2");
+  }
+  
+  @font-face {
+    font-family: "Noto Sans Korean";
+    font-weight: 700;
+    font-style: normal;
+    src: url("../font/notosans/NotoSans-Bold.eot?") format("eot"),
+    url("../font/notosans/NotoSans-Bold.otf") format("opentype"),
+    url("../font/notosans/NotoSans-Bold.woff") format("woff"),
+    url("../font/notosans/NotoSans-Bold.woff2") format("woff2");
+  }
+  
+  @font-face {
+    font-family: "Noto Sans Korean";
+    font-weight: 900;
+    font-style: normal;
+    src: url("../font/notosans/NotoSans-Black.eot?") format("eot"),
+    url("../font/notosans/NotoSans-Black.otf") format("opentype"),
+    url("../font/notosans/NotoSans-Black.woff") format("woff"),
+    url("../font/notosans/NotoSans-Black.woff2") format("woff2");
+  } 
+

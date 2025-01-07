@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ifc xmlns:xlink="http://www.w3.org/1999/xlink">
+	<header>
+		<file_description>
+			<description>no view</description>
+			<implementation_level>2;1</implementation_level>
+		</file_description>
+		<file_name>
+			<author/>
+			<organization>No Organization</organization>
+			<organization/>
+			<name>D:\01.Project-2023\24.협업플랫폼 모델\01.IFC\02.교량\01.교량-01.ifc</name>
+			<time_stamp>2023-05-03T09:26:13</time_stamp>
+			<preprocessor_version>EDMsix Version 2.0100.09 Sep  7 2016</preprocessor_version>
+			<originating_system>Allplan 2021.1 05.08.2021 - 11:04:08</originating_system>
+			<authorization/>
+		</file_name>
+		<file_schema>
+			<schema_identifiers>IFC4</schema_identifiers>
+		</file_schema>
+	</header>
+	<units>
+		<IfcSIUnit UnitType="LENGTHUNIT" Name="METRE" SI_equivalent="1"/>
+		<IfcSIUnit UnitType="AREAUNIT" Name="SQUARE_METRE" SI_equivalent="1"/>
+		<IfcSIUnit UnitType="VOLUMEUNIT" Name="CUBIC_METRE" SI_equivalent="1"/>
+		<IfcSIUnit UnitType="MASSUNIT" Prefix="KILO" Name="GRAM" SI_equivalent="1000"/>
+		<IfcConversionBasedUnit UnitType="PLANEANGLEUNIT" Name="DEGREE" SI_equivalent="0.017453292519943299"/>
+	</units>
+	<connections/>
+	<properties/>
+	<quantities/>
+	<work>
+		<schedules/>
+		<plans/>
+	</work>
+	<calendars/>
+	<types/>
+	<layers>
+		<IfcPresentationLayerWithStyle id="기초" Name="기초" Identifier="BR1_FOOT" LayerOn="true" LayerBlocked="false"/>
+		<IfcPresentationLayerWithStyle id="벽체" Name="벽체" Identifier="BR1_WALL" LayerOn="true" LayerBlocked="false"/>
+		<IfcPresentationLayerWithStyle id="버림콘크리트" Name="버림콘크리트" Identifier="BR1_LEAN" LayerOn="true" LayerBlocked="false"/>
+		<IfcPresentationLayerWithStyle id="상부슬래브" Name="상부슬래브" Identifier="BR1_SUPS" LayerOn="true" LayerBlocked="false"/>
+		<IfcPresentationLayerWithStyle id="날개벽" Name="날개벽" Identifier="BR1_W_WALL" LayerOn="true" LayerBlocked="false"/>
+		<IfcPresentationLayerWithStyle id="파라펫" Name="파라펫" Identifier="BR1_SUPS_PAP" LayerOn="true" LayerBlocked="false"/>
+	</layers>
+	<groups/>
+	<materials>
+		<IfcMaterial id="IfcMaterial_166" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_688" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_955" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_1493" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_1706" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_1795" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_1875" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_1946" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_2035" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_2123" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_2199" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_2275" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_2351" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_2431" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_2889" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_3262" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_3398" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_3526" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_3610" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_4118" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_4378" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_4909" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_5136" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_5277" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_5398" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_5478" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_5774" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_6102" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_6430" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_6730" Name="&#32;                               "/>
+		<IfcMaterial id="IfcMaterial_7051" Name="&#32;                               "/>
+	</materials>
+	<decomposition>
+		<IfcProject id="26EwF2UxzFhfn14c1YaRYr" Name="00.Smart Construction Challenge_">
+			<IfcBuilding id="0l5KjGOyL9nQaWGigbNAi$" Name="교량" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1" CompositionType="COMPLEX">
+				<IfcBuilding id="0GUwFNEfb7agJjE8QXiQcc" Name="반석1교" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1" CompositionType="ELEMENT">
+					<IfcBuildingElementProxy id="1ou5Q4fBr2_hIhBzNA9IDm" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243793.29390330499 467756.15189867298 78.444999999999993 1">
+						<IfcMaterial xlink:href="#IfcMaterial_166"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="3oaUUs_7rATh8uFcuDtP8c" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243779.08987822101 467762.61055106 86.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_688"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="0KVo4dcnbEpeC9XBbyFMJd" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243776.24401582201 467764.10147924098 79.135000000000204 1">
+						<IfcMaterial xlink:href="#IfcMaterial_955"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="3VWP48xQX7BR2M7GPAFqdU" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243786.062356454 467759.08324947202 86.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_1493"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="3PPAJedMD7RfDWEN2VXC_2" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243789.27346084701 467757.59614796098 79.344999999999999 1">
+						<IfcMaterial xlink:href="#IfcMaterial_1706"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="1gFcvHUTjBbQcF1vXdby1o" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243794.45735669101 467756.99893318798 79.345000000000098 1">
+						<IfcMaterial xlink:href="#IfcMaterial_1795"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2vp9Z4Z_r6zwnVxwbfYtpB" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243773.42400574801 467766.05276585999 78.234999999999999 1">
+						<IfcMaterial xlink:href="#IfcMaterial_1875"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2CM4Gqiaf3KRFNR0xPRXG7" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243795.881803884 467761.74172634498 87.048200000000094 1">
+						<IfcMaterial xlink:href="#IfcMaterial_1946"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="1RpcDkVHz0kw6qvMXsujPt" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243775.12433353299 467766.63150792301 79.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_2035"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2rDmFw$_93bP4mMEQJeEo6" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243773.28990320399 467765.91866331699 78.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_2123"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="0tVHeqeVTCjwNYM6AetdeI" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243777.891377589 467770.70605239901 86.838199999999802 1">
+						<IfcMaterial xlink:href="#IfcMaterial_2199"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2kFpAy6FHFrP0zTa5DtOqv" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243793.72334307001 467757.40996946301 87.048200000000605 1">
+						<IfcMaterial xlink:href="#IfcMaterial_2275"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="12ATWARzn5FP3qAtFXIpZl" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243775.732866782 467766.37407329498 86.838200000000498 1">
+						<IfcMaterial xlink:href="#IfcMaterial_2351"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="01WL2Nx1jEphop8XscgHT4" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243793.15980076199 467756.01779612899 78.344999999999999 1">
+						<IfcMaterial xlink:href="#IfcMaterial_2431"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="28Q_1mXo13nvYpW7d23GTN" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243775.12448339199 467766.23086682701 87.132150754818994 1">
+						<IfcMaterial xlink:href="#IfcMaterial_2889"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="3q$9YQhN131fOVZ7XZ4i0c" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243793.65198899401 467756.99917771999 87.339169201486399 1">
+						<IfcMaterial xlink:href="#IfcMaterial_3262"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="00uSpAXu94yfl4WgfG4Qqu" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243770.73873149601 467766.89980037499 79.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_3398"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="1FDZxQiw970vKR3vtyxNOW" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243774.975532713 467775.13422722003 79.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_3526"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2w4T6XZLH7$91Tgylt5Bi8" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243774.97512638301 467763.31654546101 87.580000000000098 1">
+						<IfcMaterial xlink:href="#IfcMaterial_3610"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2Rnx7P5DDFnhSrd8j2vPET" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243781.24663625201 467766.88590645301 86.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_4118"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="1W40DK9mrBVxmcUdkx7oNU" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243778.399877869 467768.46226677101 79.134999709119995 1">
+						<IfcMaterial xlink:href="#IfcMaterial_4378"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="1C9m1sW3f2QAAkpoFEHuVD" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243788.21869397 467763.411201182 86.135000000000005 1">
+						<IfcMaterial xlink:href="#IfcMaterial_4909"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="0eKYTnjsT0AfvgRUuz79u$" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243791.51316989801 467761.923668442 79.344999999999999 1">
+						<IfcMaterial xlink:href="#IfcMaterial_5136"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2fcEs2OJ12TQo6JzrFsINE" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243794.99438095 467754.81360664603 79.344629143437999 1">
+						<IfcMaterial xlink:href="#IfcMaterial_5277"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="1JUzqCXBXFTQY80bRM94CT" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243799.09735050201 467763.31664808001 79.344999999999999 1">
+						<IfcMaterial xlink:href="#IfcMaterial_5398"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="3BKw239bj2uhsex8PlhOA0" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243770.73867643601 467754.81423109199 87.580000000000098 1">
+						<IfcMaterial xlink:href="#IfcMaterial_5478"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="1m7uPHY8HDVwunBtdbna2F" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243776.466997196 467757.66811126599 87.147169137738302 1">
+						<IfcMaterial xlink:href="#IfcMaterial_5774"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="3VQwvr4Nr319Mpz_aMMYZk" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243775.12448339199 467766.63221597899 87.129000000000502 1">
+						<IfcMaterial xlink:href="#IfcMaterial_6102"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="3etTwT5tL2uvV4wCClRkbQ" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243794.45747524299 467756.99917771999 87.345000000000596 1">
+						<IfcMaterial xlink:href="#IfcMaterial_6430"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="2ZUanulyD0kxqET4whW$iN" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243798.845859339 467765.80642956297 87.345000000000297 1">
+						<IfcMaterial xlink:href="#IfcMaterial_6730"/>
+					</IfcBuildingElementProxy>
+					<IfcBuildingElementProxy id="0ZtKywZRPDTuozzRz1_vy0" Name="&#32;" ObjectPlacement="1 0 0 0 0 1 0 0 0 0 1 0 243779.51288175301 467775.43946782203 87.128999999999806 1">
+						<IfcMaterial xlink:href="#IfcMaterial_7051"/>
+					</IfcBuildingElementProxy>
+				</IfcBuilding>
+			</IfcBuilding>
+		</IfcProject>
+	</decomposition>
+</ifc>

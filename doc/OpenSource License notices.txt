@@ -1,0 +1,10 @@
+﻿#Three.js
+https://threejs.org/
+MIT License
+Copyright © 2010-2024 three.js authors
+
+#three-mesh-bvh
+https://github.com/gkjohnson/three-mesh-bvh/tree/master
+MIT License
+Copyright (c) 2018 Garrett Johnson
+
